@@ -1,5 +1,5 @@
 const Alert = require('../models/alert');
-const { saveSchema } = require('../validators/alerts');
+const { saveSchema, updateSchema } = require('../validators/alerts');
 const { HTTP } = require('../helpers/constants');
 const { joiErrorHandling, mongoErrorHandling, commonErrorHandling } = require('../helpers/error-handler');
 
@@ -34,7 +34,7 @@ const save = async (req, res) => {
   try {
     const alert = await Alert.create({ ...req.body })
     return res.status(HTTP.CREATED).json({ alert });
-  } catch(err){
+  } catch (err) {
     return res.status(HTTP.UNPROCESSABLE_ENTITY).json(
       mongoErrorHandling(err)
     );
@@ -44,7 +44,7 @@ const save = async (req, res) => {
 const update = async (req, res) => {
   const { id } = req.params;
   const { email, frequency, term } = req.body;
-  const { error } = saveSchema.validate(req.body);
+  const { error } = updateSchema.validate(req.body);
   if (error) {
     return res.status(HTTP.UNPROCESSABLE_ENTITY).json(
       joiErrorHandling(error)
@@ -58,11 +58,14 @@ const update = async (req, res) => {
     );
   }
 
-  alert.overwrite({
+  const update = {
+    ...alert._doc,
     email: email || alert.email,
     frequency: frequency || alert.frequency,
     term: term || alert.term
-  });
+  }
+
+  alert.overwrite(update);
 
   try {
     await alert.save();
