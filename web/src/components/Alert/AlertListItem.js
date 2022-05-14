@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { selectAlert, deleteAlert } from '../../actions/Alert';
 import './AlertList.css';
+import Swal from 'sweetalert2'
 
 class AlertListItem extends Component {
   render() {
@@ -31,7 +32,22 @@ class AlertListItem extends Component {
 
   deleteAlert() {
     const { alert } = this.props;
-    this.props.deleteAlert(alert);
+    Swal.fire({
+      title: `Do you really want to delete the alert?`,
+      text: ` Email: ${alert.email}, Term: ${alert.term}`,
+      icon: "question",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      denyButtonText: `Don't delete`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.props.deleteAlert(alert);
+        Swal.fire('Deleted!', '', 'success')
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
   }
 }
 

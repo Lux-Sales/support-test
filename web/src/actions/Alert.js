@@ -9,15 +9,18 @@ export const UPDATE_ALERT = 'UPDATE_ALERT';
 export const DELETE_ALERT = 'DELETE_ALERT';
 export const ERROR_ALERT = 'ERROR_ALERT';
 
+
 const errorHandler = (err) => {
-  const { message } = err.response.data.errors[0];
-  return (
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: message,
-    })
-  )
+  const { message } = err;
+
+  return {
+    type: ERROR_ALERT,
+    payload: {
+      error: true,
+      path: err.response.data.errors[0].path,
+      message
+    },
+  };
 }
 
 const formatAlert = (alert) => {
@@ -56,7 +59,11 @@ export function createAlert(dispatch) {
       const { data } = request;
 
       dispatch(selectAlert(null));
-
+      Swal.fire({
+        title: `Created!`,
+        text: ` Email: ${alert.email}, Term: ${alert.term}`,
+        icon: "success",
+      })
       return {
         type: CREATE_ALERT,
         payload: { data },

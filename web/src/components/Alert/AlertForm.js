@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { updateAlert, createAlert, selectAlert } from '../../actions/Alert';
+import Swal from 'sweetalert2'
 class AlertForm extends Component {
   constructor(props) {
     super(props);
 
+    this.OriginalAlert = this.props.alert
     this.createOrUpdateAlert = this.createOrUpdateAlert.bind(this);
   }
 
@@ -17,14 +19,14 @@ class AlertForm extends Component {
         <div className="form-group row">
           <label className="col-sm-4 col-form-label" htmlFor="email">Email</label>
           <div className="col-sm-7">
-            <input type="email" className="form-control" id="email" placeholder="Enter email" value={alert.email} onChange={(e) => { this.updateState('email', e.target.value) }} />
+            <input type="email" className="form-control" id="email" placeholder="Enter email" value={alert.email} onChange={(e) => { this.updateState('email', e.target.value) }} style={this.props.alert.error && this.props.alert.path == 'email'?{border: "solid red 3px"}:{}}/>
           </div>
         </div>
 
         <div className="form-group row">
           <label className="col-sm-4 col-form-label" htmlFor="keyword">Keyword</label>
           <div className="col-sm-7">
-            <input type="text" className="form-control" id="keyword" placeholder="Keyword" value={alert.term} onChange={(e) => { this.updateState('term', e.target.value) }} />
+            <input type="text" className="form-control" id="keyword" placeholder="Keyword" value={alert.term} onChange={(e) => { this.updateState('term', e.target.value) }} style={this.props.alert.error && this.props.alert.path == 'term'?{border: "solid red 3px"}:{}}/>
           </div>
         </div>
 
@@ -58,14 +60,31 @@ class AlertForm extends Component {
     this.props.selectAlert(alert);
   }
 
-  async createOrUpdateAlert(e) {
+  createOrUpdateAlert(e) {
     e.preventDefault();
     const { alert } = this.props;
-      if (alert._id) {
-        const response = await this.props.updateAlert(alert)
-      }
-
-      const response = await this.props.createAlert(alert)
+    if (alert._id) {
+      Swal.fire({
+        title: `Save changes?`,
+        text: ` Email: ${alert.email || this.OriginalAlert.email}, Term: ${alert.term || this.OriginalAlert.term}`,
+        icon: "question",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Yes, update it!',
+        denyButtonText: `Let me see one more time`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.props.updateAlert(alert)
+          Swal.fire('Updated!', '', 'success')
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })
+    }
+    else {
+      this.props.createAlert(alert)
+      console.log(this.props.alert)
+    }
   }
 
   cancelAlert() {
