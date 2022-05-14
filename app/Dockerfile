@@ -7,7 +7,9 @@ COPY ./ /var/www/app
 
 WORKDIR /var/www/app
 
-RUN yarn install
+RUN yarn global add nodemon -D
+
+RUN yarn
 
 EXPOSE 3001
 
