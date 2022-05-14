@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../configs'
+import Swal from 'sweetalert2'
 
 export const FETCH_ALERTS = 'FETCH_ALERTS';
 export const SELECT_ALERT = 'SELECT_ALERT';
@@ -9,15 +10,14 @@ export const DELETE_ALERT = 'DELETE_ALERT';
 export const ERROR_ALERT = 'ERROR_ALERT';
 
 const errorHandler = (err) => {
-  const { message } = err;
-
-  return {
-    type: ERROR_ALERT,
-    payload: {
-      error: true,
-      message
-    },
-  };
+  const { message } = err.response.data.errors[0];
+  return (
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: message,
+    })
+  )
 }
 
 const formatAlert = (alert) => {

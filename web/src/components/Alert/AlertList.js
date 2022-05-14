@@ -27,7 +27,9 @@ class AlertList extends Component {
   renderAlerts() {
     const { alerts } = this.props;
 
-    return alerts.map((alert) => {
+    return alerts.sort(function(a, b) {
+      return a.email.localeCompare(b.email)
+    }).map((alert) => {
       return <AlertListItem
         key={ alert._id }
         alert={ alert } />
