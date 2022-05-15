@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { updateAlert, createAlert, selectAlert } from '../../actions/Alert';
+import { updateAlert, createAlert, selectAlert } from '../../service/Alert';
 import Swal from 'sweetalert2'
 class AlertForm extends Component {
   constructor(props) {

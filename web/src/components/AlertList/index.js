@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import AlertListItem from '../AlertListItem'
 import AlertForm from '../AlertForm/'
 
-import { fetchAlerts, selectAlert } from '../../actions/Alert';
+import { fetchAlerts, selectAlert } from '../../service/Alert';
 
 class AlertList extends Component {
   constructor(props) {
