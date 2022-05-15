@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const static = require('./static');
-const notification = require('./notification');
+const static = require('../view/static');
+const notification = require('../view/notification');
 
 const initialize = (app) => {
   app.use(cors());
