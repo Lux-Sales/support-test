@@ -13,7 +13,7 @@ const saveSchema = Joi.object({
     .required(),
   frequency: Joi
     .number()
-    .valid(2, 5, 30)
+    .valid(2, 5, 15,30)
     .required()
 });
 
@@ -30,7 +30,7 @@ const updateSchema = Joi.object({
     .allow(null, ''),
   frequency: Joi
     .number()
-    .valid(2, 5, 30)
+    .valid(2, 5, 15,30)
     .allow(null, ''),
 });
 

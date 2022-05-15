@@ -1,4 +1,3 @@
-import axios from 'axios';
 import api from '../service/api'
 import Swal from 'sweetalert2'
 import { ERROR_ALERT, CREATE_ALERT, DELETE_ALERT, FETCH_ALERTS, SELECT_ALERT, UPDATE_ALERT } from '../actions/Alert';

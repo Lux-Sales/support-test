@@ -19,14 +19,14 @@ class AlertForm extends Component {
         <div className="form-group row">
           <label className="col-sm-4 col-form-label" htmlFor="email">Email</label>
           <div className="col-sm-7">
-            <input type="email" className="form-control" id="email" placeholder="Enter email" value={alert.email} onChange={(e) => { this.updateState('email', e.target.value) }} style={this.props.alert.error && this.props.alert.path == 'email'?{border: "solid red 3px"}:{}}/>
+            <input type="email" className="form-control" id="email" placeholder="Enter email" value={alert.email} onChange={(e) => { this.updateState('email', e.target.value) }} style={this.props.alert.error && this.props.alert.path === 'email'?{border: "solid red 3px"}:{}}/>
           </div>
         </div>
 
         <div className="form-group row">
           <label className="col-sm-4 col-form-label" htmlFor="keyword">Keyword</label>
           <div className="col-sm-7">
-            <input type="text" className="form-control" id="keyword" placeholder="Keyword" value={alert.term} onChange={(e) => { this.updateState('term', e.target.value) }} style={this.props.alert.error && this.props.alert.path == 'term'?{border: "solid red 3px"}:{}}/>
+            <input type="text" className="form-control" id="keyword" placeholder="Keyword" value={alert.term} onChange={(e) => { this.updateState('term', e.target.value) }} style={this.props.alert.error && this.props.alert.path === 'term'?{border: "solid red 3px"}:{}}/>
           </div>
         </div>
 
@@ -36,6 +36,7 @@ class AlertForm extends Component {
             <select className="custom-select" value={alert.frequency} onChange={(e) => { this.updateState('frequency', e.target.value) }} >
               <option value="2">2 minutes</option>
               <option value="5">5 minutes</option>
+              <option value="15">15 minutes</option>
               <option value="30">30 minutes</option>
             </select>
           </div>

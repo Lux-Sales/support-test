@@ -5,14 +5,19 @@ const { joiErrorHandling, mongoErrorHandling, commonErrorHandling } = require('.
 
 const find = async (req, res) => {
   const alerts = await Alert.find({});
-  return res.json({ alerts });
+  return res.status(HTTP.OK).json({ alerts });
 };
 
 const findById = async (req, res) => {
   const { id } = req.params;
 
   const alert = await Alert.findById(id)
-  return res.json({ alert });
+  if(alert){
+    res.json({ alert });
+  }
+  else{
+    res.status(HTTP.NOT_FOUND).json({ message: 'Alert not found' });
+  }
 };
 
 const save = async (req, res) => {
@@ -69,7 +74,7 @@ const update = async (req, res) => {
 
   try {
     await alert.save();
-    return res.json({ alert });
+    return res.status(HTTP.OK).json({ alert });
   } catch (error) {
     return res.status(HTTP.ERROR).json({ error });
   }
@@ -81,7 +86,7 @@ const remove = async (req, res) => {
   try {
     await Alert.deleteOne({ _id: id })
 
-    return res.json({
+    return res.status(HTTP.OK).json({
       _id: id,
       message: 'Notification successfully deleted'
     });
