@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import AlertListItem from './AlertListItem'
-import AlertForm from './AlertForm'
+import AlertListItem from '../AlertListItem'
+import AlertForm from '../AlertForm/'
 
 import { fetchAlerts, selectAlert } from '../../actions/Alert';
 
