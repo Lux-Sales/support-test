@@ -55,8 +55,14 @@ const update = async (req, res) => {
       joiErrorHandling(error)
     );
   }
+  let alert = await Alert.findOne({ email, term });
+  if (alert) {
+    return res.status(HTTP.UNPROCESSABLE_ENTITY).json(
+      commonErrorHandling('term', 'Term already registered for this user')
+    );
+  }
 
-  const alert = await Alert.findById(id);
+  alert = await Alert.findById(id);
   if (!alert) {
     return res.status(HTTP.NOT_FOUND).json(
       commonErrorHandling('_id', 'Alert not found')
