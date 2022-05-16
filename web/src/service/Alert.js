@@ -3,7 +3,11 @@ import Swal from 'sweetalert2'
 import { ERROR_ALERT, CREATE_ALERT, DELETE_ALERT, FETCH_ALERTS, SELECT_ALERT, UPDATE_ALERT } from '../actions/Alert';
 const errorHandler = (err) => {
   const { message } = err;
-
+  Swal.fire({
+    title: `Error!`,
+    icon: "error",
+    text:"Check if fields are right filled, unique email and term"
+  })
   return {
     type: ERROR_ALERT,
     payload: {

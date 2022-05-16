@@ -64,8 +64,8 @@ class AlertForm extends Component {
   createOrUpdateAlert(e) {
     e.preventDefault();
     const { alert } = this.props;
-    if (alert._id) {
-      Swal.fire({
+      if (alert._id) {
+        Swal.fire({
         title: `Save changes?`,
         text: ` Email: ${alert.email || this.OriginalAlert.email}, Term: ${alert.term || this.OriginalAlert.term}`,
         icon: "question",
@@ -84,7 +84,6 @@ class AlertForm extends Component {
     }
     else {
       this.props.createAlert(alert)
-      console.log(this.props.alert)
     }
   }
 
